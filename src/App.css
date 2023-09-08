@@ -1,0 +1,201 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* navbar */
+
+.navbar{
+    position: sticky;
+    top: -10px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: steelblue;
+}
+
+.links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+}
+
+.link:hover{
+    text-decoration: underline;
+}
+
+.userDetails{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.userDetails img{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.userDetails button{
+    margin-left: 30px;
+    width: 80px;
+    height: 30px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.userDetails button:hover{
+    background-color: lightsteelblue;
+}
+
+
+/* login page */
+
+.loginPage{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 30px;
+}
+
+.loginPage button{
+    height: 50px;
+    padding: 0px 20px;
+    background-color: steelblue;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.loginPage button:hover{
+    background-color: lightsteelblue;
+    color: dimgray;
+}
+
+
+/* Home page */
+
+.homepage{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 30px;
+}
+
+.homepage .loading{
+    color: dimgray;
+}
+
+.homepage h1{
+    color: steelblue;
+}
+
+.post{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    box-shadow: 1px 2px 5px gray;
+    border-radius: 10px;
+}
+
+.like-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* create post */
+
+.createPost{
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postForm{
+    width: 90%;
+    max-width: 500px;
+    padding: 50px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border-radius: 10px;
+    background-color: steelblue;
+}
+
+.postForm .textInput{
+    width: 90%;
+    background-color: white;
+    border: none;
+    padding: 10px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.postForm textarea{
+    height: 150px;
+}
+
+input:focus, textarea:focus{
+    outline: none !important;
+}
+
+.submitPostButton{
+    width: 100px;
+    height: 50px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.submitPostButton:hover{
+    background-color: lightsteelblue;
+    color: dimgray;
+}
