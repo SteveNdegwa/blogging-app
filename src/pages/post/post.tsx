@@ -7,8 +7,8 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Post as PostInterface } from "../pages/home";
-import { auth, db } from "../config/firebase";
+import { Post as PostInterface } from "../home";
+import { auth, db } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -23,24 +23,44 @@ interface Like {
   postId: string;
 }
 
+interface Comment {
+  id: string;
+  userId: string;
+  username: string;
+  postId: string;
+  comment: string;
+}
+
 export const Post = ({ post }: Props) => {
   const [likesList, setLikesList] = useState<Like[] | null>(null);
+  const [commentsList, setCommentsList] = useState<Comment[] | null>(null);
 
   const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
 
   const likesRef = collection(db, "likes");
-  const likesDoc = query(likesRef, where("postId", "==", post.id));
+  const likesDocs = query(likesRef, where("postId", "==", post.id));
 
   const getLikes = async () => {
-    const data = await getDocs(likesDoc);
+    const data = await getDocs(likesDocs);
     setLikesList(data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
     console.log(likesList);
   };
 
+  const commentsRef = collection(db, "comments");
+  const commentsDocs = query(commentsRef, where("postId", "==", post.id));
+
+  const getComments = async () => {
+    const data = await getDocs(commentsDocs);
+    setCommentsList(
+      data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+    );
+  };
+
   useEffect(() => {
     getLikes();
+    getComments();
   }, []);
 
   const addLike = async () => {
@@ -92,6 +112,18 @@ export const Post = ({ post }: Props) => {
         <p>Likes: {likesList?.length}</p>
       </div>
       <p className="username">@{post?.username}</p>
+
+      <div className="comments">
+        {commentsList &&
+          commentsList.map((comment) => {
+            return (
+              <div className="comment">
+                <p>{comment.comment}</p>
+                <p>{comment.username}</p>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };
