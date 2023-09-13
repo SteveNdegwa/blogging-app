@@ -18,8 +18,9 @@ export const Home = () => {
 
   const getPosts = async () => {
     const postsData = await getDocs(postsRef);
+    
     setPostsList(
-      postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+      postsData.docs.length ? postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })) : null
     );
   };
 
