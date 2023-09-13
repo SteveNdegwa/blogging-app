@@ -1,37 +1,39 @@
-import { getDocs, collection } from "firebase/firestore"
-import { db } from "../config/firebase"
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../config/firebase";
 import { useEffect, useState } from "react";
-import { Post } from "../components/post";
+import { Post } from "./post/post";
 
-export interface Post{
-    userId: string;
-    username: string;
-    title: string;
-    description: string;
-    id: string;
+export interface Post {
+  userId: string;
+  username: string;
+  title: string;
+  description: string;
+  id: string;
 }
 
-export const Home = () =>{
+export const Home = () => {
+  const [postsList, setPostsList] = useState<Post[] | null>(null);
 
-    const [postsList, setPostsList] = useState<Post[] | null>(null);
+  const postsRef = collection(db, "posts");
 
-    const postsRef = collection(db, "posts");
+  const getPosts = async () => {
+    const postsData = await getDocs(postsRef);
+    setPostsList(
+      postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+    );
+  };
 
-    const getPosts = async()=>{
-        const postsData = await getDocs(postsRef);
-        setPostsList(postsData.docs.map((doc: any)=> ({...doc.data(), id: doc.id})));
-    }
-
-   useEffect(()=>{
+  useEffect(() => {
     getPosts();
-   },[])
+  }, []);
 
-    return (
-        <div className="homepage">
-            {!postsList && <h1 className="loading">Loading...</h1>}
-            {postsList && postsList.map((post)=>{
-                return <Post post= {post} />
-            })}
-        </div>
-    )
-}
+  return (
+    <div className="homepage">
+      {!postsList && <h1 className="loading">Loading...</h1>}
+      {postsList &&
+        postsList.map((post) => {
+          return <Post post={post} />;
+        })}
+    </div>
+  );
+};
