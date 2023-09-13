@@ -7,10 +7,9 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   comment: CommentInterface;
   setCommentsList: any;
-  postId: string;
 }
 
-export const Comment = ({ comment, setCommentsList, postId }: Props) => {
+export const Comment = ({ comment, setCommentsList}: Props) => {
     const [user] = useAuthState(auth);
 
     const navigate = useNavigate();

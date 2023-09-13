@@ -155,7 +155,7 @@ export const Post = ({ post }: Props) => {
         <div className="comments">
           <h2>Comments</h2>
           {commentsList.map((comment: any) => {
-            return <Comment comment={comment} setCommentsList = {setCommentsList} postId = {post.id} />;
+            return <Comment comment={comment} setCommentsList = {setCommentsList} />;
           })}
         </div>
       )}
