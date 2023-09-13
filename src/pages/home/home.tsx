@@ -1,7 +1,7 @@
 import { getDocs, collection } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db } from "../../config/firebase";
 import { useEffect, useState } from "react";
-import { Post } from "./post/post";
+import { Post } from "./post";
 
 export interface Post {
   userId: string;
@@ -18,9 +18,11 @@ export const Home = () => {
 
   const getPosts = async () => {
     const postsData = await getDocs(postsRef);
-    
+
     setPostsList(
-      postsData.docs.length ? postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })) : null
+      postsData.docs.length
+        ? postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+        : null
     );
   };
 

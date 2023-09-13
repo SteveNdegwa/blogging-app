@@ -7,7 +7,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { Post as PostInterface } from "../home";
+import { Post as PostInterface } from "./home";
 import { auth, db } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
@@ -20,7 +20,7 @@ interface Like {
   postId: string;
 }
 
-export interface CommentInterface{
+export interface CommentInterface {
   id: string;
   userId: string;
   username: string;
@@ -34,7 +34,9 @@ interface Props {
 
 export const Post = ({ post }: Props) => {
   const [likesList, setLikesList] = useState<Like[] | null>(null);
-  const [commentsList, setCommentsList] = useState<CommentInterface[] | null>(null);
+  const [commentsList, setCommentsList] = useState<CommentInterface[] | null>(
+    null
+  );
   const [comment, setComment] = useState("");
 
   const [user] = useAuthState(auth);
@@ -103,23 +105,39 @@ export const Post = ({ post }: Props) => {
 
   const addComment = async () => {
     try {
-     if (user) {
-      const doc = await addDoc(commentsRef, {
-        userId: user?.uid,
-        username: user?.displayName,
-        postId: post.id,
-        comment: comment,
-      });
-  
-        setCommentsList((prev: any)=> 
-          prev 
-          ? [...prev, {id:doc.id, userId: user.uid, username: user.displayName, postId: post.id, comment: comment }]
-          : [{id:doc.id, userId: user.uid, username: user.displayName, postId: post.id, comment: comment }]
-        )
-     }
-     else{
-      navigate("/login");
-     }
+      if (user) {
+        const doc = await addDoc(commentsRef, {
+          userId: user?.uid,
+          username: user?.displayName,
+          postId: post.id,
+          comment: comment,
+        });
+
+        setCommentsList((prev: any) =>
+          prev
+            ? [
+                ...prev,
+                {
+                  id: doc.id,
+                  userId: user.uid,
+                  username: user.displayName,
+                  postId: post.id,
+                  comment: comment,
+                },
+              ]
+            : [
+                {
+                  id: doc.id,
+                  userId: user.uid,
+                  username: user.displayName,
+                  postId: post.id,
+                  comment: comment,
+                },
+              ]
+        );
+      } else {
+        navigate("/login");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -148,14 +166,18 @@ export const Post = ({ post }: Props) => {
           placeholder="comment..."
           onChange={(e) => setComment(e.target.value)}
         />
-        <button className="commentBtn" onClick={addComment}>Comment</button>
+        <button className="commentBtn" onClick={addComment}>
+          Comment
+        </button>
       </div>
 
       {commentsList && (
         <div className="comments">
           <h2>Comments</h2>
           {commentsList.map((comment: any) => {
-            return <Comment comment={comment} setCommentsList = {setCommentsList} />;
+            return (
+              <Comment comment={comment} setCommentsList={setCommentsList} />
+            );
           })}
         </div>
       )}
