@@ -12,10 +12,7 @@ import { auth, db } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-interface Props {
-  post: PostInterface;
-}
+import { Comment } from "./comment";
 
 interface Like {
   id: string;
@@ -23,7 +20,7 @@ interface Like {
   postId: string;
 }
 
-interface Comment {
+export interface CommentInterface{
   id: string;
   userId: string;
   username: string;
@@ -31,9 +28,14 @@ interface Comment {
   comment: string;
 }
 
+interface Props {
+  post: PostInterface;
+}
+
 export const Post = ({ post }: Props) => {
   const [likesList, setLikesList] = useState<Like[] | null>(null);
-  const [commentsList, setCommentsList] = useState<Comment[] | null>(null);
+  const [commentsList, setCommentsList] = useState<CommentInterface[] | null>(null);
+  const [comment, setComment] = useState("");
 
   const [user] = useAuthState(auth);
 
@@ -99,31 +101,64 @@ export const Post = ({ post }: Props) => {
     );
   };
 
+  const addComment = async () => {
+    try {
+     if (user) {
+      const doc = await addDoc(commentsRef, {
+        userId: user?.uid,
+        username: user?.displayName,
+        postId: post.id,
+        comment: comment,
+      });
+  
+        setCommentsList((prev: any)=> 
+          prev 
+          ? [...prev, {id:doc.id, userId: user.uid, username: user.displayName, postId: post.id, comment: comment }]
+          : [{id:doc.id, userId: user.uid, username: user.displayName, postId: post.id, comment: comment }]
+        )
+     }
+     else{
+      navigate("/login");
+     }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const hasUserLiked = likesList?.find((like) => like.userId == user?.uid);
 
   return (
     <div className="post">
       <h1>{post.title}</h1>
       <h3>{post.description}</h3>
+
       <div className="like-div">
         <button onClick={hasUserLiked ? removeLike : addLike}>
           {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}
         </button>
         <p>Likes: {likesList?.length}</p>
       </div>
+
       <p className="username">@{post?.username}</p>
 
-      <div className="comments">
-        {commentsList &&
-          commentsList.map((comment) => {
-            return (
-              <div className="comment">
-                <p>{comment.comment}</p>
-                <p>{comment.username}</p>
-              </div>
-            );
-          })}
+      <div className="addComment">
+        <input
+          type="text"
+          className="commentInput"
+          placeholder="comment..."
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <button className="commentBtn" onClick={addComment}>Comment</button>
       </div>
+
+      {commentsList && (
+        <div className="comments">
+          <h2>Comments</h2>
+          {commentsList.map((comment: any) => {
+            return <Comment comment={comment} setCommentsList = {setCommentsList} postId = {post.id} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };
