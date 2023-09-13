@@ -1,7 +1,7 @@
 import { CommentInterface } from "./post"
 import { auth, db } from "../../config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { deleteDoc, doc} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
