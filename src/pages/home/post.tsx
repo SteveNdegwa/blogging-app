@@ -48,7 +48,7 @@ export const Post = ({ post }: Props) => {
 
   const getLikes = async () => {
     const data = await getDocs(likesDocs);
-    setLikesList(data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })));
+    setLikesList(data.docs.map((doc: {id:string, data(): any}) => ({ ...doc.data(), id: doc.id })));
     console.log(likesList);
   };
 
@@ -174,7 +174,7 @@ export const Post = ({ post }: Props) => {
       {commentsList && (
         <div className="comments">
           <h2>Comments</h2>
-          {commentsList.map((comment: any) => {
+          {commentsList.map((comment: CommentInterface) => {
             return (
               <Comment comment={comment} setCommentsList={setCommentsList} />
             );
