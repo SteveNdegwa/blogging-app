@@ -36,12 +36,12 @@ export const Comment = ({ comment, setCommentsList }: Props) => {
   };
 
   return (
-    <div className="comment">
-      <p className="username">@{comment.username} - </p>
+    <div className="commentDiv">
+      <p className="username">@{comment.username}</p>
       <p className="comment">{comment.comment}</p>
       {comment.userId == user?.uid && (
         <button className="deleteComment" onClick={deleteComment}>
-          Delete
+          &#10060;
         </button>
       )}
     </div>
