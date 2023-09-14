@@ -39,6 +39,8 @@ export const Post = ({ post }: Props) => {
   );
   const [comment, setComment] = useState("");
 
+  const [showCommentBtn, setShowCommentBtn] = useState<boolean>(false)
+
   const [user] = useAuthState(auth);
 
   const navigate = useNavigate();
@@ -58,7 +60,8 @@ export const Post = ({ post }: Props) => {
   const getComments = async () => {
     const data = await getDocs(commentsDocs);
     setCommentsList(
-      data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+      data.docs.length ? 
+      data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })) :null
     );
   };
 
@@ -164,11 +167,15 @@ export const Post = ({ post }: Props) => {
           type="text"
           className="commentInput"
           placeholder="comment..."
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(e) => {
+            setComment(e.target.value);
+            e.target.value == "" ? setShowCommentBtn(false) : setShowCommentBtn(true)
+          }
+          }
         />
-        <button className="commentBtn" onClick={addComment}>
+        {showCommentBtn && <button className="commentBtn" onClick={addComment}>
           Comment
-        </button>
+        </button>}
       </div>
 
       {commentsList && (
