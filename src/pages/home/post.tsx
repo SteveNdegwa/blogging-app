@@ -153,14 +153,14 @@ export const Post = ({ post }: Props) => {
       <h1>{post.title}</h1>
       <h3>{post.description}</h3>
 
+      <p className="username">@{post?.username}</p>
+
       <div className="like-div">
         <button onClick={hasUserLiked ? removeLike : addLike}>
           {hasUserLiked ? <>&#128078;</> : <>&#128077;</>}
         </button>
         <p>Likes: {likesList?.length}</p>
       </div>
-
-      <p className="username">@{post?.username}</p>
 
       <div className="addComment">
         <input
