@@ -6,7 +6,7 @@
 
 .app{
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
@@ -131,7 +131,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    padding: 30px;
+    padding: 40px 30px;
     box-shadow: 1px 2px 5px gray;
     border-radius: 10px;
 }
@@ -144,27 +144,70 @@
     gap: 10px;
 }
 
+.addComment{
+    margin-top: 20px;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.addComment input{
+    width: 300px;
+    border: 1px solid dimgray;
+    padding: 10px;
+    font-family: 'Times New Roman', Times, serif;
+    transition: all .3s ease;
+}
+
+.addComment input:focus{
+    outline: none !important;
+}
+
+.addComment button{
+    background-color: transparent;
+    border: 1px solid dimgray;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+
+.addComment button:hover{
+    background-color: steelblue;
+    color: white;
+}
+
 .comments{
+    margin-top: 30px;
     width: 90%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
-}
-
-.comment{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
     background-color: ghostwhite;
     padding: 20px;
-    border-bottom: 2px solid dimgray;
 }
 
-.comment .username{
+.comments h2{
+    color: dimgray;
+}
+
+.commentDiv{
+   width: 100%;
+   display: flex;
+   justify-content: center;
+   gap: 20px;
+   border-bottom: 1px solid gray;
+   padding: 20px;
+   background-color: ghostwhite;
+}
+
+.commentDiv .username{
     color: dimgray;
 }
 
