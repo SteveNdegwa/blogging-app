@@ -50,7 +50,7 @@ export const Post = ({ post }: Props) => {
 
   const getLikes = async () => {
     const data = await getDocs(likesDocs);
-    setLikesList(data.docs.map((doc: {id:string, data(): any}) => ({ ...doc.data(), id: doc.id })));
+    setLikesList(data.docs.map((doc) => ({ userId: doc.data().userId, postId: doc.data().postId, id: doc.id })));
     console.log(likesList);
   };
 
@@ -61,7 +61,7 @@ export const Post = ({ post }: Props) => {
     const data = await getDocs(commentsDocs);
     setCommentsList(
       data.docs.length ? 
-      data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id })) :null
+      data.docs.map((doc) => ({ userId: doc.data().userId, username: doc.data().username, postId: doc.data().postId, comment: doc.data().comment, id: doc.id })) :null
     );
   };
 
@@ -116,14 +116,14 @@ export const Post = ({ post }: Props) => {
           comment: comment,
         });
 
-        setCommentsList((prev: any) =>
+        setCommentsList((prev) =>
           prev
             ? [
                 ...prev,
                 {
                   id: doc.id,
                   userId: user.uid,
-                  username: user.displayName,
+                  username: user.displayName || "",
                   postId: post.id,
                   comment: comment,
                 },
@@ -132,7 +132,7 @@ export const Post = ({ post }: Props) => {
                 {
                   id: doc.id,
                   userId: user.uid,
-                  username: user.displayName,
+                  username: user.displayName || "",
                   postId: post.id,
                   comment: comment,
                 },
