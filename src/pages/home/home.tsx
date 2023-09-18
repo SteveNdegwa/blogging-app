@@ -21,7 +21,7 @@ export const Home = () => {
 
     setPostsList(
       postsData.docs.length
-        ? postsData.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }))
+        ? postsData.docs.map((doc) => ({ userId: doc.data().userId, username: doc.data().username, title: doc.data().title, description: doc.data().description, id: doc.id }))
         : null
     );
   };
