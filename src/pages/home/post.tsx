@@ -38,13 +38,12 @@ export const Post = ({ post }: Props) => {
     null
   );
   const [comment, setComment] = useState("");
-
-  const [showCommentBtn, setShowCommentBtn] = useState<boolean>(false)
+  const [showCommentBtn, setShowCommentBtn] = useState(false);
 
   const [user] = useAuthState(auth);
-
   const navigate = useNavigate();
 
+  ////// get likes
   const likesRef = collection(db, "likes");
   const likesDocs = query(likesRef, where("postId", "==", post.id));
 
@@ -54,6 +53,7 @@ export const Post = ({ post }: Props) => {
     console.log(likesList);
   };
 
+  ////get comments
   const commentsRef = collection(db, "comments");
   const commentsDocs = query(commentsRef, where("postId", "==", post.id));
 
